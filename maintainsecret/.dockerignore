@@ -1,0 +1,4 @@
+*
+!*.py
+!entrypoint.sh
+!requirements.txt

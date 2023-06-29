@@ -1,0 +1,8 @@
+{
+  "python.analysis.typeCheckingMode": "strict",
+  "cSpell.words": [
+    "maintainsecret",
+    "nacl",
+    "savesecret"
+  ]
+}

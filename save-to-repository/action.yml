@@ -1,0 +1,34 @@
+name: save-repository-secret
+author: Igwe Kalu
+description: Saves a secret scoped to a GitHub repository
+branding:
+  icon: shield
+  color: blue
+inputs:
+  secret-value:
+    description: The secret value to save
+    required: true
+  secret-name:
+    description: The name of the secret. If a secret with the given name already exists, it will be overwritten
+    required: true
+  destination-repository-name:
+    description: The repository to scope the secret to
+    required: true
+  destination-repository-owner:
+    description: Owner of the target repository i.e. an organization or personal account slug
+    required: true
+  destination-github-token:
+    description: >-
+      GitHub token with authorisation scope for writing secrets to the target
+      repository and for reading the respective public key
+    required: true
+runs:
+  using: docker
+  image: ../maintainsecret/Dockerfile
+  args:
+    - "maintainsecret.save_to_repository"
+    - "--destination-github-token=${{ inputs.destination-github-token }}"
+    - "--secret-name=${{ inputs.secret-name }}"
+    - "--secret-value=${{ inputs.secret-value }}"
+    - "--destination-repository-owner=${{ inputs.destination-repository-owner }}"
+    - "--destination-repository-name=${{ inputs.destination-repository-name }}"

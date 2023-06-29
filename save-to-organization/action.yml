@@ -1,0 +1,45 @@
+name: save-organization-secret
+author: Igwe Kalu
+description: Saves a secret scoped to a GitHub organisation
+branding:
+  icon: shield
+  color: blue
+inputs:
+  secret-value:
+    description: The secret value to save
+    required: true
+  secret-name:
+    description: >-
+      The name of the secret. If a secret with the given name already exists,
+      it will be overwritten
+    required: true
+  secret-visibility:
+    description: >-
+      Visibility of the secret, which must be one of 'all', 'private' or 'selected'
+    required: true
+  destination-organization:
+    description: The organization to scope the secret to
+    required: true
+  destination-selected-repository-ids:
+    description: >-
+      Comma-separated repository-id values, representing selected repositories
+      for access to the organization secret. This is required if 'secret-visibility'
+      is set to 'selected'
+    required: false
+    default: ""
+  destination-github-token:
+    description: >-
+      GitHub token with authorization scope for writing secrets to the target
+      organization and for reading the respective public key
+    required: true
+runs:
+  using: docker
+  image: ../maintainsecret/Dockerfile
+  args:
+    - "maintainsecret.save_to_organization"
+    - "--destination-github-token=${{ inputs.destination-github-token }}"
+    - "--secret-name=${{ inputs.secret-name }}"
+    - "--secret-value=${{ inputs.secret-value }}"
+    - "--secret-visibility=${{ inputs.secret-visibility }}"
+    - "--destination-organization=${{ inputs.destination-organization }}"
+    - "--destination-selected-repository-ids=${{ inputs.destination-selected-repository-ids }}"

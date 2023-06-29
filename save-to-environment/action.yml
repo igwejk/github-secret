@@ -1,0 +1,34 @@
+name: save-environment-secret
+author: Igwe Kalu
+description: Saves a secret scoped to a deployment environment
+branding:
+  icon: shield
+  color: blue
+inputs:
+  secret-value:
+    description: The secret value to save
+    required: true
+  secret-name:
+    description: The name of the secret. If a secret with the given name already exists, it will be overwritten
+    required: true
+  destination-environment:
+    description: The target environment to scope the secret to
+    required: true
+  destination-repository-id:
+    description: The id of the repository to scope the secret to
+    required: true
+  destination-github-token:
+    description: >-
+      GitHub token with authorization scope for writing secrets to the target
+      repository and for reading the respective public key
+    required: true
+runs:
+  using: docker
+  image: ../maintainsecret/Dockerfile
+  args:
+    - "maintainsecret.save_to_environment"
+    - "--secret-name=${{ inputs.secret-name }}"
+    - "--secret-value=${{ inputs.secret-value }}"
+    - "--destination-environment=${{ inputs.destination-environment }}"
+    - "--destination-github-token=${{ inputs.destination-github-token }}"
+    - "--destination-repository-id=${{ inputs.destination-repository-id }}"
