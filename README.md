@@ -139,7 +139,7 @@ jobs:
           secret-value: ${{ secrets[matrix.secretname] }}
           destination-repository-name: ${{ fromJSON(inputs.json-migration-spec)[matrix.secretname].destinationRepositoryName }} # e.g. "repo-01"
           destination-repository-owner: ${{ fromJSON(inputs.json-migration-spec)[matrix.secretname].destinationRepositoryOwner }} # e.g. "targetorganization-a"
-          destination-github-token: ${{ secrets[fromJSON(inputs.json-migration-spec)[matrix.secretname].destinationPersonalAccessTokenName] }} # e.g. secret["the_pat_a"]
+          destination-github-token: ${{ fromJSON(inputs.json-migration-spec)[matrix.secretname].destinationPersonalAccessTokenName }} # e.g. secret["the_pat_a"]
 ```
 
 ### Copy an `environment` secret
